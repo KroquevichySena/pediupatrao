@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Gerenciar Produtos</title>
+</head>
+<body>
+
+<div th:fragment="content">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold mb-0"><i class="bi bi-boxes me-2 text-primary"></i>Produtos</h2>
+        <button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#formularioProduto">
+            <i class="bi bi-plus-lg me-1"></i> Novo Produto
+        </button>
+    </div>
+
+    <div class="alert alert-success alert-dismissible fade show" th:if="${sucesso}" role="alert">
+        <span th:text="${sucesso}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <div class="alert alert-danger alert-dismissible fade show" th:if="${erro}" role="alert">
+        <span th:text="${erro}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <!-- Formulário de Cadastro -->
+    <div class="collapse mb-4" id="formularioProduto">
+        <div class="card card-body" style="max-width: 600px;">
+            <form th:action="@{/produtos/salvar}" th:object="${produto}" method="post">
+                <div class="mb-3">
+                    <label for="nome" class="form-label">Nome do Produto</label>
+                    <input type="text" id="nome" th:field="*{nome}" class="form-control" required>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label for="tipo" class="form-label">Tipo</label>
+                        <select id="tipo" th:field="*{tipo}" class="form-select" required>
+                            <option value="" disabled>Selecione</option>
+                            <option value="Pizza">Pizza</option>
+                            <option value="Esfiha">Esfiha</option>
+                            <option value="Lanche">Lanche</option>
+                            <option value="Bebida">Bebida</option>
+                            <option value="Porção">Porção</option>
+                            <option value="Adicional">Adicional</option>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <label for="preco" class="form-label">Preço (R$)</label>
+                        <input type="number" id="preco" th:field="*{preco}" class="form-control" step="0.01" min="0.01" required>
+                    </div>
+                </div>
+                <div class="form-check mb-3">
+                    <input type="checkbox" id="ativo" name="ativo" value="true" class="form-check-input" checked>
+                    <label for="ativo" class="form-check-label">Produto ativo</label>
+                </div>
+                <button type="submit" class="btn btn-success">Salvar</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="ps-4">Nome</th>
+                        <th>Tipo</th>
+                        <th class="text-end">Preço</th>
+                        <th>Ativo</th>
+                        <th class="text-end pe-4">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(produtos)}">
+                        <td colspan="5" class="text-center text-muted py-5">Nenhum produto cadastrado.</td>
+                    </tr>
+                    <tr th:each="p : ${produtos}">
+                        <td class="ps-4" th:text="${p.nome}"></td>
+                        <td th:text="${p.tipo}"></td>
+                        <td class="text-end" th:text="${p.preco != null} ? ${'R$ ' + #numbers.formatDecimal(p.preco, 1, 'POINT', 2, 'COMMA')} : '—'"></td>
+                        <td>
+                            <span class="badge" th:classappend="${p.ativo} ? 'bg-success' : 'bg-secondary'"
+                                  th:text="${p.ativo} ? 'Sim' : 'Não'"></span>
+                        </td>
+                        <td class="text-end pe-4">
+                            <form th:action="@{/produtos/{id}/ativo(id=${p.id})}" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-outline-secondary"
+                                        th:text="${p.ativo} ? 'Desativar' : 'Ativar'"></button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

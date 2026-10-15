@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Novo Pedido</title>
+</head>
+<body>
+
+<div th:fragment="content">
+
+    <div class="d-flex align-items-center gap-3 mb-4">
+        <a th:href="@{/pedidos}" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left"></i>
+        </a>
+        <h2 class="fw-bold mb-0">Novo Pedido</h2>
+    </div>
+
+    <div class="alert alert-danger" th:if="${erro}" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i><span th:text="${erro}"></span>
+    </div>
+
+    <div class="alert alert-warning" th:if="${#lists.isEmpty(clientes)}">
+        Nenhum cliente cadastrado. <a th:href="@{/clientes/novo}">Cadastre um cliente</a> antes de registrar o pedido.
+    </div>
+
+    <div class="card shadow-sm" style="max-width: 760px;">
+        <div class="card-body p-4">
+            <!-- Não há campo de preço/total: o servidor calcula a partir do cadastro de produtos -->
+            <form th:action="@{/pedidos}" method="post" id="formPedido">
+
+                <div class="mb-3">
+                    <label for="clienteId" class="form-label fw-medium"><i class="bi bi-person me-1"></i>Cliente</label>
+                    <select id="clienteId" name="clienteId" class="form-select" required>
+                        <option value="" selected disabled>Selecione o cliente</option>
+                        <option th:each="c : ${clientes}" th:value="${c.id}"
+                                th:text="${c.nome + ' — ' + (c.telefone ?: '')}"></option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <span class="form-label fw-medium d-block">Tipo</span>
+                    <div class="form-check form-check-inline" th:each="t, st : ${tiposEntrega}">
+                        <input class="form-check-input" type="radio" name="tipoEntrega"
+                               th:id="${'tipo' + t}" th:value="${t}" th:checked="${st.first}">
+                        <label class="form-check-label" th:for="${'tipo' + t}"
+                               th:text="${t.name() == 'ENTREGA'} ? 'Entrega' : 'Retirada no balcão'"></label>
+                    </div>
+                </div>
+
+                <hr class="my-3"/>
+                <p class="fw-medium mb-2"><i class="bi bi-list-ul me-1"></i>Itens</p>
+
+                <div id="itens">
+                    <div class="row g-2 mb-2 linha-item">
+                        <div class="col-8">
+                            <select name="produtoId" class="form-select" required>
+                                <option value="" selected disabled>Produto</option>
+                                <option th:each="p : ${produtos}" th:value="${p.id}"
+                                        th:text="${p.nome + ' — R$ ' + #numbers.formatDecimal(p.preco, 1, 'POINT', 2, 'COMMA')}"></option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <input type="number" name="quantidade" class="form-control" min="1" max="50" value="1" required>
+                        </div>
+                        <div class="col-1 d-flex align-items-center">
+                            <button type="button" class="btn btn-sm btn-outline-danger remover-item" title="Remover">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-secondary mb-3" id="btnAdicionarItem">
+                    <i class="bi bi-plus"></i> Adicionar item
+                </button>
+
+                <div class="mb-4">
+                    <label for="observacao" class="form-label fw-medium">Observação</label>
+                    <input type="text" id="observacao" name="observacao" class="form-control" maxlength="200"
+                           placeholder="Ex: sem cebola">
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-lg me-1"></i> Registrar pedido
+                    </button>
+                    <a th:href="@{/pedidos}" class="btn btn-outline-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            const container = document.getElementById('itens');
+            const modelo = container.querySelector('.linha-item').cloneNode(true);
+
+            document.getElementById('btnAdicionarItem').addEventListener('click', () => {
+                const nova = modelo.cloneNode(true);
+                nova.querySelector('select').selectedIndex = 0;
+                nova.querySelector('input').value = 1;
+                container.appendChild(nova);
+            });
+
+            container.addEventListener('click', (e) => {
+                const botao = e.target.closest('.remover-item');
+                if (botao && container.querySelectorAll('.linha-item').length > 1) {
+                    botao.closest('.linha-item').remove();
+                }
+            });
+        })();
+    </script>
+</div>
+
+</body>
+</html>
