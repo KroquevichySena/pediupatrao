@@ -9,7 +9,6 @@ O projeto agora inclui **`/dashboard`**, acessível a ADMIN e GERENTE, com indic
 - [Requisitos funcionais, não funcionais, regras e arquitetura](docs/dashboard/REQUISITOS-E-PROJETO.md)
 - [Documentação dos endpoints: parâmetros, requisições, respostas e erros](docs/dashboard/API.md)
 - [Evidências dos testes realizados](docs/dashboard/TESTES.md)
-- [Roteiro do vídeo de até 3 minutos](docs/dashboard/ROTEIRO-VIDEO.md)
 - [API implementada](src/main/java/com/umc/pediupatrao/controller/DashboardController.java) · [serviço integrado ao banco](src/main/java/com/umc/pediupatrao/service/DashboardService.java) · [interface](src/main/resources/templates/dashboard.html)
 - Gitflow: `feature/dashboard-administrativo` → `develop` → `main`.
 
@@ -48,7 +47,7 @@ $env:MONGODB_URI = "mongodb://localhost:27017"
 
 Os testes de integração usam exclusivamente `pediupatrao_dashboard_test` e removem os registros com seus IDs próprios ao terminar. O GitHub Actions sobe MongoDB e executa a suíte completa, disponibilizando os relatórios como artefato. O fluxo Docker foi preparado, mas não executado no ambiente de validação; a execução Java com MongoDB real foi verificada.
 
-**Entrega no Teams:** envie apenas o link deste repositório. A gravação do vídeo ainda deve ser feita e adicionada ao GitHub; o roteiro está pronto no link acima.
+**Entrega no Teams:** envie apenas o link deste repositório. A gravação do vídeo de até 3 minutos ainda deve ser feita e adicionada ao GitHub.
 
 ---
 
