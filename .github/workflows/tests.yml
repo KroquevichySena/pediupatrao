@@ -2,7 +2,8 @@ name: Java e MongoDB
 on: [push, pull_request]
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # MongoDB 8.0 recusa kernels Linux 6.19–7.0.13. Fixar a geração do runner.
+    runs-on: ubuntu-22.04
     services:
       mongo:
         image: mongo:8.0

@@ -71,3 +71,5 @@ Saída capturada: [smoke-http.txt](evidencias/smoke-http.txt).
 ## Reprodução no GitHub
 
 O workflow [tests.yml](../../.github/workflows/tests.yml) sobe MongoDB e executa `verify` com integração habilitada. Os relatórios são enviados como artefato da execução. O resultado da CI deve ser consultado na aba Actions; o resultado local acima não presume sucesso da execução remota.
+
+A primeira execução remota, em `ubuntu-latest`, parou na inicialização do container: a versão do MongoDB recusou o kernel Linux do runner antes de qualquer teste. O workflow foi ajustado para `ubuntu-22.04`. A incompatibilidade é descrita nas [notas oficiais do MongoDB 8.0](https://www.mongodb.com/docs/v8.0/release-notes/8.0/). O histórico de execuções permanece na aba Actions.
