@@ -1,0 +1,20 @@
+[INFO] Running com.umc.pediupatrao.controller.DashboardApiTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 15.17 s -- in com.umc.pediupatrao.controller.DashboardApiTest
+[INFO] Running com.umc.pediupatrao.controller.DashboardMongoIntegrationTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.597 s -- in com.umc.pediupatrao.controller.DashboardMongoIntegrationTest
+[INFO] Running com.umc.pediupatrao.controller.PedidoApiSegurancaTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.502 s -- in com.umc.pediupatrao.controller.PedidoApiSegurancaTest
+[INFO] Running com.umc.pediupatrao.controller.TelasRenderizacaoTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.894 s -- in com.umc.pediupatrao.controller.TelasRenderizacaoTest
+[INFO] Running com.umc.pediupatrao.entity.StatusPedidoTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 s -- in com.umc.pediupatrao.entity.StatusPedidoTest
+[INFO] Running com.umc.pediupatrao.service.AuditoriaServiceTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.118 s -- in com.umc.pediupatrao.service.AuditoriaServiceTest
+[INFO] Running com.umc.pediupatrao.service.DashboardServiceTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.278 s -- in com.umc.pediupatrao.service.DashboardServiceTest
+[INFO] Running com.umc.pediupatrao.service.PedidoServiceTest
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.249 s -- in com.umc.pediupatrao.service.PedidoServiceTest
+[INFO] Tests run: 48, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+[INFO] Total time:  44.011 s
+[INFO] Finished at: 2026-11-10T18:04:03-03:00

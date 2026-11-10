@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"><body>
+<section th:fragment="content" class="dashboard">
+  <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+  <header class="dash-header">
+    <div><p class="dash-eyebrow">PEDIU PATRÃO / GESTÃO</p><h1>Visão da operação<span>.</span></h1><p class="dash-muted">Seus pedidos viram informação. Suas decisões ganham direção.</p></div>
+    <div class="dash-refresh"><span id="atualizado" role="status">Aguardando consulta</span><button id="atualizar" class="dash-button" type="button">↻ Atualizar</button></div>
+  </header>
+  <form id="filtros-dashboard" class="dash-filters">
+    <label>Data inicial<input id="inicio" name="inicio" type="date" required></label>
+    <label>Data final<input id="fim" name="fim" type="date" required></label>
+    <label>Situação<select id="status" name="status"><option value="">Todas as situações</option></select></label>
+    <label>Modalidade<select id="tipoEntrega" name="tipoEntrega"><option value="">Entrega e retirada</option></select></label>
+    <label>Agrupar por<select id="agrupamento" name="agrupamento"><option value="dia">Dia</option><option value="mes">Mês</option></select></label>
+    <button class="dash-button dash-primary" type="submit">Aplicar filtros</button>
+    <label class="dash-auto"><input id="automatico" type="checkbox" checked> Atualizar a cada 60 s</label>
+  </form>
+  <div id="dash-erro" class="dash-alert" role="alert" hidden></div>
+  <p id="dash-vazio" class="dash-empty" hidden>Nenhum pedido encontrado neste período. Ajuste os filtros ou registre um pedido.</p>
+  <div id="dash-dados" aria-busy="true">
+    <div class="dash-kpis">
+      <article class="dash-kpi dash-revenue"><span>Faturamento realizado</span><strong id="faturamento">—</strong><small>Pedidos finalizados · após descontos</small></article>
+      <article class="dash-kpi"><span>Pedidos no período</span><strong id="totalPedidos">—</strong><small><b id="finalizados">—</b> finalizados</small></article>
+      <article class="dash-kpi"><span>Ticket médio</span><strong id="ticketMedio">—</strong><small>Faturamento ÷ pedidos finalizados</small></article>
+      <article class="dash-kpi"><span>Em andamento</span><strong id="emAndamento">—</strong><small>Acompanhe a fila de produção</small></article>
+    </div>
+    <div class="dash-charts">
+      <article class="dash-panel"><div class="dash-panel-heading"><div><p class="dash-eyebrow">DESEMPENHO</p><h2>Evolução das vendas</h2></div><span class="dash-tag">R$ · finalizados</span></div><div class="dash-chart"><canvas id="grafico-vendas" role="img" aria-label="Evolução do faturamento de pedidos finalizados"></canvas></div><details><summary>Ver dados do gráfico</summary><div class="dash-table-wrap"><table><thead><tr><th>Período</th><th>Finalizados</th><th>Faturamento</th></tr></thead><tbody id="tabela-vendas"></tbody></table></div></details></article>
+      <article class="dash-panel"><div class="dash-panel-heading"><div><p class="dash-eyebrow">FLUXO DE PEDIDOS</p><h2>Situação da operação</h2></div></div><div class="dash-chart"><canvas id="grafico-status" role="img" aria-label="Distribuição de pedidos por situação"></canvas></div><ul id="legenda-status" class="dash-status-list"></ul></article>
+    </div>
+    <div class="dash-bottom">
+      <article class="dash-panel"><div class="dash-panel-heading"><div><p class="dash-eyebrow">PREFERIDOS DO PÚBLICO</p><h2>Produtos mais vendidos</h2></div><span class="dash-tag">Top 5</span></div><p class="dash-muted">Unidades em pedidos finalizados. Valor bruto antes dos descontos.</p><ol id="ranking" class="dash-ranking"></ol></article>
+      <article class="dash-panel"><div class="dash-panel-heading"><div><p class="dash-eyebrow">SAÚDE DAS VENDAS</p><h2>Descontos e cancelamentos</h2></div></div><dl class="dash-metrics"><div><dt>Descontos concedidos</dt><dd id="descontos">—</dd></div><div><dt>Pedidos cancelados</dt><dd id="cancelados">—</dd></div><div><dt>Taxa de cancelamento</dt><dd id="taxaCancelamento">—</dd></div></dl><p class="dash-note">Todos os números respeitam os filtros. A data considerada é a entrada do pedido, no horário de São Paulo.</p></article>
+    </div>
+    <article class="dash-panel"><div class="dash-panel-heading"><div><p class="dash-eyebrow">ACOMPANHAMENTO</p><h2>Pedidos recentes</h2></div><a th:href="@{/pedidos}">Abrir gestão de pedidos →</a></div><div class="dash-table-wrap"><table><thead><tr><th>Pedido</th><th>Entrada</th><th>Modalidade</th><th>Situação</th><th>Total</th></tr></thead><tbody id="pedidos-recentes"></tbody></table></div><div class="dash-pagination"><button id="anterior" type="button" class="dash-button">← Anterior</button><span id="paginacao"></span><button id="proxima" type="button" class="dash-button">Próxima →</button></div></article>
+  </div>
+  <script th:src="@{/plugins/chart.js/Chart.min.js}"></script>
+  <script th:src="@{/js/dashboard.js}"></script>
+</section>
+</body></html>

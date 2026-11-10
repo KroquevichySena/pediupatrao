@@ -18,6 +18,9 @@
                     <span class="badge bg-info text-dark ms-1" sec:authorize="hasRole('ATENDENTE')">ATENDENTE</span>
                 </div>
                 <ul class="nav flex-column">
+                    <li class="nav-item" sec:authorize="hasAnyRole('ADMIN','GERENTE')">
+                        <a class="nav-link" th:href="@{/dashboard}"><i class="bi bi-bar-chart"></i><span>&nbsp;Dashboard</span></a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/}" aria-current="page">
                             <i class="bi bi-house"></i><span class="d-none d-md-inline">&nbsp;Home</span>
