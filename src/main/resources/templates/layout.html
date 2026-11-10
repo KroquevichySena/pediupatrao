@@ -31,12 +31,12 @@
         </div>
 
         <!-- Sidebar incluído como fragmento -->
-        <aside>
+        <aside class="app-sidebar">
             <div th:replace="~{fragments/sidebar :: sidebar}"></div>
         </aside>
 
         <!-- Conteúdo Principal -->
-        <main class="container-fluid mt-4">
+        <main class="app-main container-fluid mt-4">
             <div th:replace="~{__${content}__}"></div>
         </main>
 
