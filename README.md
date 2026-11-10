@@ -1,5 +1,57 @@
 # PediuPatrão 🍕 — Controle de acesso, gestão de pedidos e auditoria
 
+## Nova entrega: Dashboard Administrativo
+
+O projeto agora inclui **`/dashboard`**, acessível a ADMIN e GERENTE, com indicadores de vendas, gráficos, situação dos pedidos, ranking de produtos, filtros e atualização automática. A interface consome a API integrada ao MongoDB; dados fictícios são inseridos somente quando o perfil `demo` é ativado.
+
+### Material para avaliação
+
+- [Requisitos funcionais, não funcionais, regras e arquitetura](docs/dashboard/REQUISITOS-E-PROJETO.md)
+- [Documentação dos endpoints: parâmetros, requisições, respostas e erros](docs/dashboard/API.md)
+- [Evidências dos testes realizados](docs/dashboard/TESTES.md)
+- [Roteiro do vídeo de até 3 minutos](docs/dashboard/ROTEIRO-VIDEO.md)
+- [API implementada](src/main/java/com/umc/pediupatrao/controller/DashboardController.java) · [serviço integrado ao banco](src/main/java/com/umc/pediupatrao/service/DashboardService.java) · [interface](src/main/resources/templates/dashboard.html)
+- Gitflow: `feature/dashboard-administrativo` → `develop` → `main`.
+
+### Executar para demonstração
+
+**Opção A — Docker Compose** (requer Docker instalado e em execução):
+
+```powershell
+$env:SPRING_PROFILES_ACTIVE = "demo"
+docker compose up --build -d
+```
+
+Abra [o dashboard local](http://localhost:8080/dashboard). Entre como `gerente01` ou `admin`; senha de desenvolvimento padrão: `pizza@2026`. O perfil `demo` cria 90 pedidos fictícios dos últimos 28 dias no banco separado **`pediupatrao_demo`**. Para ver todos, selecione esse período no painel. Não são dados reais do estabelecimento. Sem perfil demo, o dashboard consulta o banco normal `pizzaria`.
+
+**Opção B — Java 21 e MongoDB:** suba apenas o banco com `docker compose up -d mongo`, ou use MongoDB local/Atlas. Execute:
+
+```powershell
+$env:MONGODB_URI = "mongodb://localhost:27017"
+.\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=demo" "-Dspring-boot.run.jvmArguments=-Duser.timezone=America/Sao_Paulo"
+```
+
+Em Linux/macOS: `chmod +x mvnw` e `./mvnw spring-boot:run -Dspring-boot.run.profiles=demo -Dspring-boot.run.jvmArguments=-Duser.timezone=America/Sao_Paulo`.
+
+O seed da demonstração não sobrescreve pedidos existentes e usa IDs por data. Em uma execução em outro dia pode adicionar nova massa de demonstração. Usuários e produtos de exemplo seguem o inicializador já existente. Para uso real, configure `APP_SENHA_INICIAL` antes da primeira execução; isso não altera senhas de usuários que já existem.
+
+### Validar
+
+```powershell
+# Testes unitários e HTTP (sem exigir MongoDB)
+.\mvnw.cmd test
+# Suíte completa, com MongoDB local ativo
+$env:RUN_MONGO_TESTS = "true"
+$env:MONGODB_URI = "mongodb://localhost:27017"
+.\mvnw.cmd verify
+```
+
+Os testes de integração usam exclusivamente `pediupatrao_dashboard_test` e removem os registros com seus IDs próprios ao terminar. O GitHub Actions sobe MongoDB e executa a suíte completa, disponibilizando os relatórios como artefato. O fluxo Docker foi preparado, mas não executado no ambiente de validação; a execução Java com MongoDB real foi verificada.
+
+**Entrega no Teams:** envie apenas o link deste repositório. A gravação do vídeo ainda deve ser feita e adicionada ao GitHub; o roteiro está pronto no link acima.
+
+---
+
 Evolução do projeto PediuPatrão (Java 21, Spring Boot 3.4, Spring Security, MongoDB e Thymeleaf) para a Atividade Prática M1 — Parte 2 de Engenharia de Software.
 
 ## Como executar
