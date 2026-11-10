@@ -62,6 +62,8 @@ public class SecurityConfig {
                 .csrf(csrf -> {})
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/error", "/css/**", "/dist/**", "/plugins/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/dashboard", "/api/dashboard", "/api/dashboard/**").hasAnyRole("ADMIN", "GERENTE")
+                        .requestMatchers("/api/dashboard", "/api/dashboard/**").denyAll()
 
                         // Usuários e páginas administrativas: só ADMIN
                         .requestMatchers("/usuarios/**", "/api/usuarios/**").hasRole("ADMIN")

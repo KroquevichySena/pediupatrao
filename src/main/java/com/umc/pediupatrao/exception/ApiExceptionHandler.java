@@ -2,6 +2,8 @@ package com.umc.pediupatrao.exception;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+import org.springframework.dao.DataAccessException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,17 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ApiExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(ApiExceptionHandler.class);
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<Map<String, Object>> parametroInvalido(MethodArgumentTypeMismatchException e) {
+        return resposta(HttpStatus.BAD_REQUEST, "Parâmetro inválido: " + e.getName());
+    }
+
+    @ExceptionHandler(DataAccessException.class)
+    public ResponseEntity<Map<String, Object>> bancoIndisponivel(DataAccessException e) {
+        log.error("Falha na consulta ao banco de dados", e);
+        return resposta(HttpStatus.SERVICE_UNAVAILABLE, "Banco de dados indisponível. Tente novamente.");
+    }
 
     @ExceptionHandler(RecursoNaoEncontradoException.class)
     public ResponseEntity<Map<String, Object>> naoEncontrado(RecursoNaoEncontradoException e) {

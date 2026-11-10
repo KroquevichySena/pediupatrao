@@ -1,0 +1,8 @@
+PASS: API sem sessão retorna 401
+PASS: login real de GERENTE, template e recursos locais retornam 200
+PASS: JSON real com indicadores, série de 28 dias e status consistentes
+PASS: período vazio retorna 200 e valores zerados
+PASS: filtros inválidos retornam 400 e 422
+PASS: login real de ATENDENTE bloqueado na API e página com 403
+PASS: login real de ADMIN autorizado
+SMOKE HTTP OK
